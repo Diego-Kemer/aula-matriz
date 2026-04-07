@@ -9,15 +9,21 @@ describe('AppShell', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppShell]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AppShell);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should render the app title', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('.logo')?.textContent).toContain('AulaMatriz');
   });
+
+  it('should render 3 navegation links', ()=>{
+    const compiled = fixture.nativeElement as HTMLElement;
+    const links = compiled.querySelectorAll('.menu a');
+    expect(links.length).toBe(3);
+  })
 });

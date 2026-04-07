@@ -1,0 +1,35 @@
+.shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  background: #f6f1e8;
+}
+
+.sidebar {
+  background: #476c6f;
+  color: white;
+  padding: 2rem;
+}
+
+.logo {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.content {
+  padding: 2rem;
+}
