@@ -36,4 +36,24 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Dashboard')
   })
+
+  it('should navigate to lesson form page when clicking /nueva-clase link', async ()=>{
+    const fixture = TestBed.createComponent(App);
+    const router = TestBed.inject(Router)
+
+    await router.navigateByUrl('/')
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const links = compiled.querySelectorAll('.menu a');
+
+    const newClassLink = links[1] as HTMLAnchorElement;
+    newClassLink.click();
+
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(compiled.textContent).toContain('Nueva clase');
+  })
 });
