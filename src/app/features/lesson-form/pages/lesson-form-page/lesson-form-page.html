@@ -1,4 +1,13 @@
 <section>
   <h2>Nueva clase</h2>
-  <p>Comenzá a crear tu secuencia didáctica</p>
+
+  <form [formGroup]="lessonForm" >
+    <input type="text" formControlName="title" placeholder="Título" />
+    <input type="text" formControlName="subject" placeholder="Materia" />
+    <input type="text" formControlName="course" placeholder="Curso" />
+
+    <button (click)="onSubmit()" type="submit" [disabled]="lessonForm.invalid">
+      Crear clase
+    </button>
+  </form>
 </section>
