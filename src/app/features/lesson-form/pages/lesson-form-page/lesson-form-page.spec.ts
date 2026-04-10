@@ -37,4 +37,28 @@ describe('LessonFormPage', () => {
 
     expect(button.disabled).toBe(false);
   })
+
+  it('should enable submit button when user types in all inputs', async () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const inputs = compiled.querySelectorAll('input');
+    const button = compiled.querySelector('button') as HTMLButtonElement;
+
+    const titleInput = inputs[0] as HTMLInputElement;
+    const subjectInput = inputs[1] as HTMLInputElement;
+    const courseInput = inputs[2] as HTMLInputElement;
+
+    titleInput.value = 'El cuento fantástico';
+    titleInput.dispatchEvent(new Event('input'));
+
+    subjectInput.value = 'Lengua y Literatura';
+    subjectInput.dispatchEvent(new Event('input'));
+
+    courseInput.value = '3ro A';
+    courseInput.dispatchEvent(new Event('input'));
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(button.disabled).toBe(false);
+  });
 })
