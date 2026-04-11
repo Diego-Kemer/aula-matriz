@@ -1,13 +1,32 @@
 <section>
   <h2>Nueva clase</h2>
 
-  <form [formGroup]="lessonForm" >
-    <input type="text" formControlName="title" placeholder="Título" />
-    <input type="text" formControlName="subject" placeholder="Materia" />
-    <input type="text" formControlName="course" placeholder="Curso" />
+  <form [formGroup]="lessonForm">
+    <div class="form-block">
+      <h3>Datos generales</h3>
+      <input type="text" formControlName="theme" placeholder="Tema" />
+      <input type="text" formControlName="subject" placeholder="Materia" />
+      <input type="text" formControlName="course" placeholder="Curso" />
+      <input type="text" formControlName="duration" placeholder="Duración" />
+    </div>
 
-    <button (click)="onSubmit()" type="submit" [disabled]="lessonForm.invalid">
-      Crear clase
-    </button>
+    <div class="form-block">
+      <h3>Diseño pedagógico</h3>
+      <textarea formControlName="rationale" placeholder="Fundamentación"></textarea>
+      <textarea formControlName="objectives" placeholder="Objetivos"></textarea>
+      <textarea formControlName="activities" placeholder="Actividades"></textarea>
+    </div>
+
+    <div class="form-block">
+      <h3>Cierre</h3>
+      <textarea formControlName="resources" placeholder="Recursos"></textarea>
+      <textarea formControlName="assessment" placeholder="Evaluación"></textarea>
+      <textarea formControlName="notes" placeholder="Observaciones"></textarea>
+    </div>
+
+    <div class="actions">
+      <button (click)="onSubmit()" type="submit" [disabled]="lessonForm.invalid">Crear clase</button>
+      <button type="button" (click)="clearDraft()">Limpiar borrador</button>
+    </div>
   </form>
 </section>

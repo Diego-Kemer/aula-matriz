@@ -1,0 +1,42 @@
+.lesson-form-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+form {
+  display: grid;
+  gap: 24px;
+}
+
+.form-block {
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 16px;
+  padding: 20px;
+  display: grid;
+  gap: 12px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cfcfcf;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+.actions {
+  display: flex;
+  gap: 12px;
+}
+button {
+  padding: 14px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}

@@ -24,9 +24,16 @@ describe('LessonFormPage', () => {
   it('should enable submit button when form is valid', async () => {
     const component = fixture.componentInstance;
     component.lessonForm.patchValue({
-      title: 'El cuento fantástico',
+      theme: 'El cuento fantástico',
       subject: 'Lengua y Literatura',
-      course: '3er año'
+      course: '3er año',
+      duration: '80 min',
+      rationale: 'Marco teórico del género fantástico',
+      objectives: 'Reconocer rasgos del género',
+      activities: 'Lectura y análisis grupal',
+      resources: '',
+      assessment: '',
+      notes: '',
     })
 
     fixture.detectChanges();
@@ -38,27 +45,34 @@ describe('LessonFormPage', () => {
     expect(button.disabled).toBe(false);
   })
 
-  it('should enable submit button when user types in all inputs', async () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    const inputs = compiled.querySelectorAll('input');
-    const button = compiled.querySelector('button') as HTMLButtonElement;
+  it('should save draft in localstorage when form changes', async ()=>{
+    vi.useFakeTimers();
 
-    const titleInput = inputs[0] as HTMLInputElement;
-    const subjectInput = inputs[1] as HTMLInputElement;
-    const courseInput = inputs[2] as HTMLInputElement;
+    const component = fixture.componentInstance;
+    const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
 
-    titleInput.value = 'El cuento fantástico';
-    titleInput.dispatchEvent(new Event('input'));
+    component.lessonForm.patchValue({
+      theme: 'El cuento fantástico'
+    });
 
-    subjectInput.value = 'Lengua y Literatura';
-    subjectInput.dispatchEvent(new Event('input'));
+    vi.advanceTimersByTime(800); // Simula el paso del tiempo para el debounce
 
-    courseInput.value = '3ro A';
-    courseInput.dispatchEvent(new Event('input'));
+    expect(setItemSpy).toHaveBeenCalled();
 
-    fixture.detectChanges();
-    await fixture.whenStable();
+    vi.useRealTimers()
+  })
 
-    expect(button.disabled).toBe(false);
+  it('should clear draft and reset form', () => {
+    const component = fixture.componentInstance;
+    const removeItemSpy = vi.spyOn(Storage.prototype, 'removeItem');
+
+    component.lessonForm.patchValue({
+      theme: 'Narrativa fantástica',
+    });
+
+    component.clearDraft();
+
+    expect(component.lessonForm.get('theme')?.value).toBe(null);
+    expect(removeItemSpy).toHaveBeenCalledWith('lessonDraft');
   });
 })
