@@ -23,9 +23,9 @@ describe('AppShell', () => {
     expect(compiled.querySelector('.logo')?.textContent).toContain('AulaMatriz');
   });
 
-  it('should render 3 navegation links', ()=>{
+  it('should render 4 navegation links', ()=>{
     const compiled = fixture.nativeElement as HTMLElement;
     const links = compiled.querySelectorAll('.menu a');
-    expect(links.length).toBe(3);
+    expect(links.length).toBe(4);
   })
 });
