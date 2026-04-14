@@ -1,13 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LessonFormPage } from './lesson-form-page';
+import { LessonService } from '../../../../core/services/lesson.service';
+import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 
 describe('LessonFormPage', () => {
   let fixture: ComponentFixture<LessonFormPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LessonFormPage]
+      imports: [LessonFormPage],
+      providers: [provideRouter([])]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LessonFormPage);
@@ -75,4 +78,27 @@ describe('LessonFormPage', () => {
     expect(component.lessonForm.get('theme')?.value).toBe(null);
     expect(removeItemSpy).toHaveBeenCalledWith('lessonDraft');
   });
+
+  it('should update lesson when editing', ()=>{
+    const route = TestBed.inject(ActivatedRoute)
+    const lessonServ = TestBed.inject(LessonService);
+    const component = fixture.componentInstance;
+    const updateSpy = vi.spyOn(lessonServ, 'updateLesson')
+
+    vi.spyOn(route.snapshot.paramMap, 'get').mockReturnValue('1');
+
+    component.lessonForm.patchValue({
+      theme: 'Clase actualizada',
+      subject: 'Lengua',
+      course: '3ro A',
+      duration: '80 min',
+      rationale: 'Nueva fundamentación',
+      objectives: 'Nuevo objetivo',
+      activities: 'Nueva actividad',
+    })
+
+    component.onSubmit();
+
+    expect(updateSpy).toHaveBeenCalled();
+  })
 })

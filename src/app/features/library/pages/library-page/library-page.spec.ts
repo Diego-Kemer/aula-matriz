@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LibraryPage } from './library-page';
+import { provideRouter, Router } from '@angular/router';
 
 describe('LibraryPage', () => {
   let component: LibraryPage;
@@ -8,7 +9,8 @@ describe('LibraryPage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryPage]
+      imports: [LibraryPage],
+      providers: [provideRouter([])]
     })
     .compileComponents();
 
@@ -36,5 +38,14 @@ describe('LibraryPage', () => {
     component.deleteLesson(lessonId);
 
     expect(component.lessons.length).toBe(initialLength - 1);
+  })
+
+  it('should navigate to edit lesson route', ()=>{
+    const router = TestBed.inject(Router)
+    const navigateSpy = vi.spyOn(router, 'navigate');
+
+    component.editLesson(1);
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/nueva-clase', 1])
   })
 });

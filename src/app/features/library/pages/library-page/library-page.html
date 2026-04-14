@@ -3,12 +3,7 @@
     <h2>Biblioteca</h2>
   </div>
 
-  <input
-    class="library-search"
-    type="text"
-    placeholder="Buscar por tema"
-    [(ngModel)]="search"
-  />
+  <input class="library-search" type="text" placeholder="Buscar por tema" [(ngModel)]="search" />
 
   <div class="lesson-grid">
     @for (lesson of filteredLessons; track lesson.id) {
@@ -21,13 +16,8 @@
         </div>
 
         <div class="actions">
-          <button class="btn-edit">Editar</button>
-          <button
-            class="btn-duplicate"
-            (click)="duplicateLesson(lesson)"
-          >
-            Duplicar
-          </button>
+          <button (click)="editLesson(lesson.id)" class="btn-edit">Editar</button>
+          <button (click)="duplicateLesson(lesson)" class="btn-duplicate" >Duplicar</button>
           <button (click)="deleteLesson(lesson.id)" class="btn-delete">Eliminar</button>
         </div>
       </div>

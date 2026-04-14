@@ -14,6 +14,10 @@ export const routes: Routes = [
                 component: DashboardPage
             },
             {
+                path: 'nueva-clase/:id',
+                component: LessonFormPage
+            },
+            {
                 path: 'nueva-clase',
                 component: LessonFormPage
             },

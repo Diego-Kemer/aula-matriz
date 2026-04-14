@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LESSONS_MOCK } from '../../../../utils/moks/lesson.mock/lesson.mock';
 import { LessonModel } from '../../../../core/models/lesson-model';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LessonService } from '../../../../core/services/lesson.service';
 
 @Component({
   selector: 'app-library-page',
@@ -11,9 +13,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class LibraryPage {
 
+  private router = inject(Router);
+  private lessonService = inject(LessonService);
   public search = '';
 
-  lessons: LessonModel[] = LESSONS_MOCK;
+  lessons: LessonModel[] = this.lessonService.getLessons();
 
   get filteredLessons() {
     return this.lessons.filter((lesson) =>
@@ -40,6 +44,9 @@ export class LibraryPage {
     }else{
       return;
     }
+  }
 
+  editLesson(id: number) {
+    this.router.navigate(['/nueva-clase', id]);
   }
 }
