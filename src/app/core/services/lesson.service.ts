@@ -22,4 +22,7 @@ export class LessonService {
     )
   }
   
+  createLesson(newLesson: LessonModel){
+    this.lessons = [newLesson, ...this.lessons]
+  }
 }

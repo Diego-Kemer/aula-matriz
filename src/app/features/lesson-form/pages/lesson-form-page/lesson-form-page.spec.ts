@@ -101,4 +101,24 @@ describe('LessonFormPage', () => {
 
     expect(updateSpy).toHaveBeenCalled();
   })
+
+  it('should create lesson when form is submitted without route id', () => {
+    const component = fixture.componentInstance;
+    const lessonService = TestBed.inject(LessonService);
+    const createSpy = vi.spyOn(lessonService, 'createLesson');
+
+    component.lessonForm.patchValue({
+      theme: 'Nueva clase',
+      subject: 'Lengua',
+      course: '3ro A',
+      duration: '80 min',
+      rationale: 'Fundamentación',
+      objectives: 'Objetivos',
+      activities: 'Lectura',
+    });
+
+    component.onSubmit();
+
+    expect(createSpy).toHaveBeenCalled();
+  });
 })

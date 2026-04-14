@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
 import { LESSONS_MOCK } from '../../../../utils/moks/lesson.mock/lesson.mock';
 import { LessonService } from '../../../../core/services/lesson.service';
+import { LessonModel } from '../../../../core/models/lesson-model';
 
 @Component({
   selector: 'app-lesson-form-page',
@@ -59,19 +60,20 @@ export class LessonFormPage implements OnInit {
 
   onSubmit(){
     const lessonId = this.router.snapshot.paramMap.get('id');
-
-    if(lessonId){
-      this.lessonServ.updateLesson({
+    const lessonPayload: LessonModel = {
         ...this.lessonForm.value,
         id: Number(lessonId),
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         status: 'draft',
-      });
+      }
+
+    if(lessonId){
+      this.lessonServ.updateLesson(lessonPayload);
       return;
     }
 
-    console.log(this.lessonForm.value)
+    this.lessonServ.createLesson(lessonPayload)
   }
 
   clearDraft() {
