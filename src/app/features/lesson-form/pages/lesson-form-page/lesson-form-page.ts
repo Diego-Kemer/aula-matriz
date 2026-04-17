@@ -5,6 +5,7 @@ import { debounceTime } from 'rxjs';
 import { LESSONS_MOCK } from '../../../../utils/moks/lesson.mock/lesson.mock';
 import { LessonService } from '../../../../core/services/lesson.service';
 import { LessonModel } from '../../../../core/models/lesson-model';
+import { LessonsStorage } from '../../../../core/state/lessons.storage';
 
 @Component({
   selector: 'app-lesson-form-page',
@@ -16,6 +17,7 @@ export class LessonFormPage implements OnInit {
   private fb = inject(FormBuilder)
   private router = inject(ActivatedRoute);
   private lessonServ = inject(LessonService);
+  private storage = inject(LessonsStorage);
   lessonForm!: FormGroup;
 
   ngOnInit(): void {
@@ -58,22 +60,12 @@ export class LessonFormPage implements OnInit {
     }
   }
 
-  onSubmit(){
-    const lessonId = this.router.snapshot.paramMap.get('id');
-    const lessonPayload: LessonModel = {
-        ...this.lessonForm.value,
-        id: Number(lessonId),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        status: 'draft',
-      }
+  onSubmit() {
+    if (this.lessonForm.invalid) return;
 
-    if(lessonId){
-      this.lessonServ.updateLesson(lessonPayload);
-      return;
-    }
+    this.storage.create(this.lessonForm.value);
 
-    this.lessonServ.createLesson(lessonPayload)
+    this.lessonForm.reset();
   }
 
   clearDraft() {

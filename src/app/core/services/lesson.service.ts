@@ -1,28 +1,28 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { LessonModel } from '../models/lesson-model';
-import { LESSONS_MOCK } from '../../utils/moks/lesson.mock/lesson.mock';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LessonService {
-  private lessons: LessonModel[] = [...LESSONS_MOCK];
+    private http = inject(HttpClient);
+    private apiUrl = `${environment.apiUrl}/lessons`;
 
-  getLessons(){
-    return this.lessons;
-  }
+    getAll() {
+      return this.http.get<LessonModel[]>(this.apiUrl);
+    }
 
-  getLessonById(id: number){
-    return this.lessons.find((lesson)=> lesson.id === id);
-  }
+    create(data: Partial<LessonModel>) {
+      return this.http.post<LessonModel>(this.apiUrl, data);
+    }
 
-  updateLesson(updatedLesson: LessonModel){
-    this.lessons = this.lessons.map((lesson)=>
-      lesson.id === updatedLesson.id ? updatedLesson : lesson
-    )
-  }
-  
-  createLesson(newLesson: LessonModel){
-    this.lessons = [newLesson, ...this.lessons]
-  }
+    update(id: number, data: Partial<LessonModel>) {
+      return this.http.patch<LessonModel>(`${this.apiUrl}/${id}`, data);
+    }
+
+    delete(id: number) {
+      return this.http.delete(`${this.apiUrl}/${id}`);
+    }
 }
