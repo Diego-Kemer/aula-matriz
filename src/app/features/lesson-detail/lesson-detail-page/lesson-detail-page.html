@@ -1,0 +1,37 @@
+@if (lesson(); as l) {
+
+  <div class="detail">
+
+    <button (click)="goBack()">← Volver</button>
+
+    <h1>{{ l.theme }}</h1>
+
+    <p><strong>Materia:</strong> {{ l.subject }}</p>
+    <p><strong>Curso:</strong> {{ l.course }}</p>
+    <p><strong>Duración:</strong> {{ l.duration }}</p>
+
+    <h3>Fundamentación</h3>
+    <p>{{ l.rationale }}</p>
+
+    <h3>Objetivos</h3>
+    <p>{{ l.objectives }}</p>
+
+    <h3>Actividades</h3>
+    <p>{{ l.activities }}</p>
+
+    <h3>Recursos</h3>
+    <p>{{ l.resources }}</p>
+
+    <h3>Evaluación</h3>
+    <p>{{ l.assessment }}</p>
+
+    <h3>Notas</h3>
+    <p>{{ l.notes }}</p>
+
+    <button (click)="edit()">✏️ Editar</button>
+
+  </div>
+
+} @else {
+  <p>Cargando clase...</p>
+}

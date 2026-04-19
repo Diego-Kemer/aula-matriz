@@ -55,4 +55,8 @@ export class LibraryPage implements OnInit{
   editLesson(id: number) {
     this.router.navigate(['/nueva-clase', id]);
   }
+
+  viewLesson(id: number) {
+    this.router.navigate(['/clase', id]);
+  }
 }

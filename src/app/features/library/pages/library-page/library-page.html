@@ -16,6 +16,7 @@
     @for (lesson of storage.lessons(); track lesson.id) {
       <app-lesson-card
         [lesson]="lesson"
+        (view)="viewLesson($event)"
         (edit)="editLesson($event)"
         (delete)="deleteLesson($event)"
         (duplicate)="duplicateLesson($event)"

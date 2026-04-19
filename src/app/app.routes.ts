@@ -24,6 +24,12 @@ export const routes: Routes = [
             {
                 path: 'biblioteca',
                 component: LibraryPage
+            },
+            {
+                path: 'clase/:id',
+                loadComponent: () =>
+                    import('./features/lesson-detail/lesson-detail-page/lesson-detail-page')
+                    .then(m => m.LessonDetailPage)
             }
         ]
     }

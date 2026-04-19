@@ -35,9 +35,6 @@ export class LessonsStorage {
       next: (lesson) => {
         this.lessons.update(prev => [lesson, ...prev]);
         this.toast.show('Clase creada correctamente', 'success');
-      },
-      error: ()=>{
-        this.toast.show('Error al crear la clase', 'error');
       }
     });
   }
@@ -49,9 +46,6 @@ export class LessonsStorage {
           prev.map(l => l.id === id ? updated : l)
         );
         this.toast.show('Clase actualizada correctamente', 'success');
-      },
-      error: ()=>{
-        this.toast.show('Error al actualizar la clase', 'error');
       }
     });
   }
@@ -63,9 +57,6 @@ export class LessonsStorage {
           prev.filter(l => l.id !== id)
         );
         this.toast.show('Clase eliminada correctamente', 'info');
-      },
-      error: ()=>{
-        this.toast.show('Error al eliminar la clase', 'error');
       }
     });
   }

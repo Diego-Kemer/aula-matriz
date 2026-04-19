@@ -13,6 +13,9 @@ export class LessonCard {
   @Output() edit = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
   @Output() duplicate = new EventEmitter<LessonModel>();
+  @Output() view = new EventEmitter<number>();
+
+
 
   onEdit() {
     this.edit.emit(this.lesson.id);
@@ -26,4 +29,7 @@ export class LessonCard {
     this.duplicate.emit(this.lesson);
   }
 
+  onView() {
+    this.view.emit(this.lesson.id);
+  }
 }
