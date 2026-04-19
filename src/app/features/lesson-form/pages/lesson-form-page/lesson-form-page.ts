@@ -1,9 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
-import { LessonService } from '../../../../core/services/lesson.service';
-import { LessonModel } from '../../../../core/models/lesson-model';
 import { LessonsStorage } from '../../../../core/state/lessons.storage';
 
 @Component({
@@ -15,10 +13,10 @@ import { LessonsStorage } from '../../../../core/state/lessons.storage';
 export class LessonFormPage implements OnInit {
   private fb = inject(FormBuilder)
   private route = inject(ActivatedRoute);
-  private lessonServ = inject(LessonService);
   private storage = inject(LessonsStorage);
   private router = inject(Router);
-
+  
+  isSaving = signal(false);
   lessonId: number | null = null;
   isEditMode = false;
   lessonForm!: FormGroup;
@@ -69,6 +67,8 @@ export class LessonFormPage implements OnInit {
   onSubmit() {
     if (this.lessonForm.invalid) return;
 
+    this.isSaving.set(true)
+
      const data = this.lessonForm.value;
 
     if (this.isEditMode && this.lessonId) {
@@ -77,8 +77,12 @@ export class LessonFormPage implements OnInit {
       this.storage.create(data);
     }
 
-    this.lessonForm.reset();
-    this.router.navigate(['/library']);
+    setTimeout(()=>{
+      this.isSaving.set(false);
+      this.lessonForm.reset();
+      this.router.navigate(['/library']);
+    }, 500)
+
   }
 
   clearDraft() {

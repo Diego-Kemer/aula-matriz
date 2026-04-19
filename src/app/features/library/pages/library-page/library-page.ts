@@ -3,10 +3,11 @@ import { LessonModel } from '../../../../core/models/lesson-model';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LessonsStorage } from '../../../../core/state/lessons.storage';
+import { LessonCard } from "../../components/lesson-card/lesson-card";
 
 @Component({
   selector: 'app-library-page',
-  imports: [FormsModule],
+  imports: [FormsModule, LessonCard],
   templateUrl: './library-page.html',
   styleUrl: './library-page.css',
 })

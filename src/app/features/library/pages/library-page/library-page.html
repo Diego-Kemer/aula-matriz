@@ -14,20 +14,12 @@
       <p>{{ storage.error() }}</p>
     }
     @for (lesson of storage.lessons(); track lesson.id) {
-      <div class="lesson-card">
-        <h3>{{ lesson.theme }}</h3>
-
-        <div class="lesson-meta">
-          <span>{{ lesson.course }}</span>
-          <span class="status-badge">{{ lesson.status }}</span>
-        </div>
-
-        <div class="actions">
-          <button (click)="editLesson(lesson.id)" class="btn-edit">Editar</button>
-          <button (click)="duplicateLesson(lesson)" class="btn-duplicate">Duplicar</button>
-          <button (click)="deleteLesson(lesson.id)" class="btn-delete">Eliminar</button>
-        </div>
-      </div>
+      <app-lesson-card
+        [lesson]="lesson"
+        (edit)="editLesson($event)"
+        (delete)="deleteLesson($event)"
+        (duplicate)="duplicateLesson($event)"
+      />
     }
   </div>
 </section>

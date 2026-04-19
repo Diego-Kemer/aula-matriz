@@ -1,0 +1,15 @@
+<div class="card">
+  <h3>{{ lesson.theme }}</h3>
+  <p>{{ lesson.subject }} - {{ lesson.course }}</p>
+
+  <div class="meta">
+    <span>{{ lesson.duration }}</span>
+    <span class="status">{{ lesson.status }}</span>
+  </div>
+
+  <div class="actions">
+    <button (click)="onEdit()">✏️ Editar</button>
+    <button (click)="onDuplicate()">📄 Duplicar</button>
+    <button (click)="onDelete()">🗑️ Eliminar</button>
+  </div>
+</div>
