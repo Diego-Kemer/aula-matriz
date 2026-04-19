@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
-import { LESSONS_MOCK } from '../../../../utils/moks/lesson.mock/lesson.mock';
 import { LessonService } from '../../../../core/services/lesson.service';
 import { LessonModel } from '../../../../core/models/lesson-model';
 import { LessonsStorage } from '../../../../core/state/lessons.storage';
@@ -15,20 +14,27 @@ import { LessonsStorage } from '../../../../core/state/lessons.storage';
 })
 export class LessonFormPage implements OnInit {
   private fb = inject(FormBuilder)
-  private router = inject(ActivatedRoute);
+  private route = inject(ActivatedRoute);
   private lessonServ = inject(LessonService);
   private storage = inject(LessonsStorage);
+  private router = inject(Router);
+
+  lessonId: number | null = null;
+  isEditMode = false;
   lessonForm!: FormGroup;
 
   ngOnInit(): void {
-    const lessonId = this.router.snapshot.paramMap.get('id');
+    const lessonId = this.route.snapshot.paramMap.get('id');
 
     if(lessonId){
-      const lessonToEdit = LESSONS_MOCK.find((lesson)=> lesson.id === Number(lessonId))
-
-      if(lessonToEdit){
-        this.lessonForm.patchValue(lessonToEdit);
-      }
+      this.lessonId = Number(lessonId)
+      this.isEditMode = true;
+      
+      this.storage.getById(this.lessonId).subscribe({
+        next: (lessonToEdit)=>{
+          this.lessonForm.patchValue(lessonToEdit);
+        }
+      })
     };
   
 
@@ -63,9 +69,16 @@ export class LessonFormPage implements OnInit {
   onSubmit() {
     if (this.lessonForm.invalid) return;
 
-    this.storage.create(this.lessonForm.value);
+     const data = this.lessonForm.value;
+
+    if (this.isEditMode && this.lessonId) {
+      this.storage.update(this.lessonId, data);
+    } else {
+      this.storage.create(data);
+    }
 
     this.lessonForm.reset();
+    this.router.navigate(['/library']);
   }
 
   clearDraft() {

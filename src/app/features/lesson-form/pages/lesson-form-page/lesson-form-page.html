@@ -1,5 +1,7 @@
 <section>
-  <h2>Nueva clase</h2>
+  <h2>
+    {{ isEditMode ? 'Editar clase' : 'Nueva clase' }}
+  </h2>
 
   <form [formGroup]="lessonForm">
     <div class="form-block">
@@ -25,7 +27,9 @@
     </div>
 
     <div class="actions">
-      <button (click)="onSubmit()" type="submit" [disabled]="lessonForm.invalid">Crear clase</button>
+      <button type="submit" [disabled]="lessonForm.invalid">
+        {{ isEditMode ? 'Actualizar clase' : 'Crear clase' }}
+      </button>
       <button type="button" (click)="clearDraft()">Limpiar borrador</button>
     </div>
   </form>

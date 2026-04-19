@@ -56,5 +56,9 @@ export class LessonsStorage {
     });
   }
 
+  getById(id: number) {
+    return this.lessonService.getById(id);
+  }
+
   
 }

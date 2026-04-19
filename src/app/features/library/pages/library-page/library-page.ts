@@ -1,9 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { LESSONS_MOCK } from '../../../../utils/moks/lesson.mock/lesson.mock';
 import { LessonModel } from '../../../../core/models/lesson-model';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LessonService } from '../../../../core/services/lesson.service';
 import { LessonsStorage } from '../../../../core/state/lessons.storage';
 
 @Component({

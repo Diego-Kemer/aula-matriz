@@ -13,6 +13,10 @@ export class LessonService {
     getAll() {
       return this.http.get<LessonModel[]>(this.apiUrl);
     }
+    
+    getById(id: number) {
+      return this.http.get<LessonModel>(`${this.apiUrl}/${id}`);
+    }
 
     create(data: Partial<LessonModel>) {
       return this.http.post<LessonModel>(this.apiUrl, data);
