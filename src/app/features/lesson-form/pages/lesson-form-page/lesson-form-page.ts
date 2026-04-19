@@ -80,7 +80,7 @@ export class LessonFormPage implements OnInit {
     setTimeout(()=>{
       this.isSaving.set(false);
       this.lessonForm.reset();
-      this.router.navigate(['/library']);
+      this.router.navigate(['/biblioteca']);
     }, 500)
 
   }

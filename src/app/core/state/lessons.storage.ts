@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { LessonService } from '../services/lesson.service';
 import { LessonModel } from '../models/lesson-model';
+import { ToastService } from '../services/toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ export class LessonsStorage {
   lessons = signal<LessonModel[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
+  private toast = inject(ToastService);
 
   load() {
     this.loading.set(true);
@@ -32,6 +34,10 @@ export class LessonsStorage {
     this.lessonService.create(data).subscribe({
       next: (lesson) => {
         this.lessons.update(prev => [lesson, ...prev]);
+        this.toast.show('Clase creada correctamente', 'success');
+      },
+      error: ()=>{
+        this.toast.show('Error al crear la clase', 'error');
       }
     });
   }
@@ -42,6 +48,10 @@ export class LessonsStorage {
         this.lessons.update(prev =>
           prev.map(l => l.id === id ? updated : l)
         );
+        this.toast.show('Clase actualizada correctamente', 'success');
+      },
+      error: ()=>{
+        this.toast.show('Error al actualizar la clase', 'error');
       }
     });
   }
@@ -52,6 +62,10 @@ export class LessonsStorage {
         this.lessons.update(prev =>
           prev.filter(l => l.id !== id)
         );
+        this.toast.show('Clase eliminada correctamente', 'info');
+      },
+      error: ()=>{
+        this.toast.show('Error al eliminar la clase', 'error');
       }
     });
   }

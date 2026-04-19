@@ -27,7 +27,7 @@
     </div>
 
     <div class="actions">
-      <button type="submit" [disabled]="lessonForm.invalid">
+      <button (click)="onSubmit()" type="submit" [disabled]="lessonForm.invalid">
         {{ isSaving() ? 'Guardando...' : (isEditMode ? 'Actualizar clase' : 'Crear clase' )}}
       </button>
       <button type="button" (click)="clearDraft()">Limpiar borrador</button>
